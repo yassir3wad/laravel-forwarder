@@ -1,6 +1,6 @@
 {
     "name": "digitalcloud/laravel-forwarder",
-    "description": "Laravel package allow you to add created/updated by attributes on eloquent models",
+    "description": "Laravel package allows you to fetch data from external link and return it to a callback url",
     "keywords": [
         "laravel",
         "package",
