@@ -12,8 +12,8 @@ class Forward
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next, $to)
@@ -25,7 +25,7 @@ class Forward
             $request = $before($request);
         }
 
-        $client = new Client(['base_uri' => $to]);
+        $client = new Client(['base_uri' => config('forward.base_uri')]);
 
         try {
             $header = ($request->header());
