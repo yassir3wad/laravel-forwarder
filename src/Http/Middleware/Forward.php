@@ -18,12 +18,12 @@ class Forward
      */
     public function handle($request, Closure $next, $to)
     {
-        $class = (Route::current()->getController());
-        $method = Route::current()->getActionMethod();
-        if (method_exists($class, 'before' . ucfirst($method))) {
-            $before = Closure::fromCallable([$class, 'before' . ucfirst($method)]);
-            $request = $before($request);
-        }
+//        $class = (Route::current()->getController());
+//        $method = Route::current()->getActionMethod();
+//        if (method_exists($class, 'before' . ucfirst($method))) {
+//            $before = Closure::fromCallable([$class, 'before' . ucfirst($method)]);
+//            $request = $before($request);
+//        }
 
         $client = new Client(['base_uri' => config('forward.base_uri')]);
 
