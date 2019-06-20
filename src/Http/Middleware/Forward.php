@@ -28,14 +28,20 @@ class Forward
         $client = new Client(['base_uri' => config('forward.base_uri')]);
 
         try {
-            $header = ($request->header());
-            unset($header['content-type']);
-            $header['accept'] = 'application/json';
+            $newHeader = [
+                'authorization' => $request->header('authorization'),
+                'accept' => $request->header('accept'),
+            ];
+
+            \Log::channel("slack")->info(json_encode($newHeader));
+            \Log::channel("slack")->info($request->segments());
+            \Log::channel("slack")->info($request->query());
+
             $result = $client->__call($request->method(), [
                 implode('/', $request->segments()), [
                     'form_params' => $request->post(),
                     'query' => $request->query(),
-                    'headers' => $header
+                    'headers' => $newHeader
                 ]
             ]);
         } catch (\Exception $exception) {
