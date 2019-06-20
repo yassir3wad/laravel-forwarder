@@ -26,17 +26,16 @@ class Forward
 //        }
 
         $client = new Client(['base_uri' => config('forward.base_uri')]);
-
         try {
             $result = $client->__call($request->method(), [
                 implode('/', $request->segments()), [
                     'form_params' => $request->post(),
                     'query' => $request->query(),
                     'headers' => [
-                        'authorization' => $request->header('authorization'),
-                        'accept' => $request->header('accept'),
-                        'user-agent' => $request->header('user-agent'),
-                        'agent' => $request->header('agent'),
+                        'Authorization' => $request->header('authorization'),
+                        'Accept' => $request->header('accept'),
+                        'App-Version' => $request->header('App-Version'),
+                        'Agent' => $request->header('Agent'),
                     ]
                 ]
             ]);
