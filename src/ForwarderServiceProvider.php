@@ -10,16 +10,16 @@ class ForwarderServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Route::macro('forward', function ($method, $routeFrom, $routeTo = null, $path = null) {
+        Route::macro('forward', function ($route, $method, $routeTo = null, $path = null) {
             if (!$path) {
                 $path = [SendController::class, 'send'];
             }
 
             if (!$routeTo) {
-                $routeTo = $routeFrom;
+                $routeTo = $route;
             }
 
-            Route::$method($routeFrom, $path)->middleware("forward:$routeTo");
+            Route::$method($route, $path)->middleware("forward:$routeTo");
         });
 
         $this->publishes([
