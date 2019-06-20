@@ -6,7 +6,6 @@ use DigitalCloud\Forwarder\Classes\ErrorParser;
 use Closure;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Arr;
 
 class Forward
 {
@@ -33,12 +32,17 @@ class Forward
 
             $client = new Client(['base_uri' => config('forward.base_uri')]);
 
+            $headers = [];
+            foreach (config_path("forward.headers", []) as $h) {
+                $headers[$h] = $request->header($h);
+            }
+
             $result = $client->__call($request->method(), [
                 implode('/', $request->segments()),
                 [
                     'form_params' => $request->post(),
                     'query' => $request->query(),
-                    'headers' => Arr::only($request->header(), config_path("forward.headers", []))
+                    'headers' => $headers
                 ]
             ]);
         } catch (\Exception $exception) {
