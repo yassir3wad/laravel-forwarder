@@ -4,6 +4,7 @@ namespace DigitalCloud\Forwarder\Http\Middleware;
 
 use DigitalCloud\Forwarder\Classes\ErrorParser;
 use Closure;
+use DigitalCloud\Forwarder\Http\Controllers\SendController;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
 
@@ -50,7 +51,11 @@ class Forward
             return $error->handle();
         }
 
-        $request = $request->merge(['response' => json_decode((string)$result->getBody(), true)]);
-        return $next($request);
+        if ($class == SendController::class) {
+            return json_decode((string)$result->getBody(), true);
+        } else {
+            $request = $request->merge(['response' => json_decode((string)$result->getBody(), true)]);
+            return $next($request);
+        }
     }
 }
