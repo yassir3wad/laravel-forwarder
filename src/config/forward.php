@@ -9,10 +9,10 @@
 return [
     'base_uri' => env("FORWARD_URI"),
     "headers" => [
-        'Authorization',
-        'Accept',
-        'App-Version',
-        'Agent'
+        'authorization',
+        'accept',
+        'app-version',
+        'agent'
     ],
     "methods" => ['get', 'post', 'delete', 'put', 'patch']
 ];
