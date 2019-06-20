@@ -12,6 +12,7 @@ return [
         'Authorization',
         'Accept',
         'App-Version',
-        'Agent',
-    ]
+        'Agent'
+    ],
+    "methods" => ['get', 'post', 'delete', 'put', 'patch']
 ];
