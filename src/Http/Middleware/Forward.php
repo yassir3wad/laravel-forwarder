@@ -6,6 +6,7 @@ use DigitalCloud\Forwarder\Classes\ErrorParser;
 use Closure;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Arr;
 
 class Forward
 {
@@ -16,27 +17,28 @@ class Forward
      * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $to)
+    public function handle($request, Closure $next)
     {
-//        $class = (Route::current()->getController());
-//        $method = Route::current()->getActionMethod();
-//        if (method_exists($class, 'before' . ucfirst($method))) {
-//            $before = Closure::fromCallable([$class, 'before' . ucfirst($method)]);
-//            $request = $before($request);
-//        }
+        $class = (Route::current()->getController());
+        $method = Route::current()->getActionMethod();
+        if (method_exists($class, 'before' . ucfirst($method))) {
+            $before = Closure::fromCallable([$class, 'before' . ucfirst($method)]);
+            $request = $before($request);
+        }
 
-        $client = new Client(['base_uri' => config('forward.base_uri')]);
+
         try {
+            if (!config('forward.base_uri'))
+                throw new \Exception("Forwarder base uri not specified");
+
+            $client = new Client(['base_uri' => config('forward.base_uri')]);
+
             $result = $client->__call($request->method(), [
-                implode('/', $request->segments()), [
+                implode('/', $request->segments()),
+                [
                     'form_params' => $request->post(),
                     'query' => $request->query(),
-                    'headers' => [
-                        'Authorization' => $request->header('authorization'),
-                        'Accept' => $request->header('accept'),
-                        'App-Version' => $request->header('App-Version'),
-                        'Agent' => $request->header('Agent'),
-                    ]
+                    'headers' => Arr::only($request->header(), config_path("forward.headers", []))
                 ]
             ]);
         } catch (\Exception $exception) {

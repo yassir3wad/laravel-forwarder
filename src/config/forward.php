@@ -8,4 +8,10 @@
 
 return [
     'base_uri' => env("FORWARD_URI"),
+    "headers" => [
+        'Authorization',
+        'Accept',
+        'App-Version',
+        'Agent',
+    ]
 ];
