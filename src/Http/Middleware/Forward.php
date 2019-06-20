@@ -26,7 +26,6 @@ class Forward
             $request = $before($request);
         }
 
-
         try {
             if (!config('forward.base_uri'))
                 throw new \Exception("Forwarder base uri not specified", 400);
@@ -47,8 +46,10 @@ class Forward
                 ]
             ]);
         } catch (\Exception $exception) {
-            $error = new ErrorParser($exception);
-            return $error->handle();
+//            $error = new ErrorParser($exception);
+//            return $error->handle();
+        } finally {
+            return response(["message" => ""]);
         }
 
         if ($class == SendController::class) {

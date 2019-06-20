@@ -29,7 +29,6 @@ class ErrorParser extends Exception
             case 422:
                 return $this->validation();
                 break;
-
             default:
                 return response(['message' => $this->exception->getMessage()], $this->exception->getCode());
                 break;
