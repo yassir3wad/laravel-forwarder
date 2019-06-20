@@ -28,7 +28,7 @@ class Forward
 
         try {
             if (!config('forward.base_uri'))
-                throw new \Exception("Forwarder base uri not specified");
+                throw new \Exception("Forwarder base uri not specified", 400);
 
             $client = new Client(['base_uri' => config('forward.base_uri')]);
 
