@@ -33,7 +33,7 @@ class Forward
                     'form_params' => $request->post(),
                     'query' => $request->query(),
                     'headers' => [
-                        'authorization' => $request->header('forward'),
+                        'authorization' => $request->header('authorization'),
                         'accept' => $request->header('accept'),
                         'user-agent' => $request->header('user-agent'),
                         'agent' => $request->header('agent'),
