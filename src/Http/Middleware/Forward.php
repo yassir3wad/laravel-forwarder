@@ -33,7 +33,7 @@ class Forward
             $client = new Client(['base_uri' => config('forward.base_uri')]);
 
             $headers = [];
-            foreach (config_path("forward.headers", []) as $h) {
+            foreach (config("forward.headers", []) as $h) {
                 $headers[$h] = $request->header($h);
             }
 

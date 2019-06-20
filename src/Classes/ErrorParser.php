@@ -31,8 +31,7 @@ class ErrorParser extends Exception
                 break;
 
             default:
-                dd($this->exception->getMessage(), $this->exception->getCode());
-                return response(['message' => $this->exception->getMessage()], ((int)$this->exception->getCode()) ?? 400);
+                return response(['message' => $this->exception->getMessage()], $this->exception->getCode());
                 break;
         }
     }
