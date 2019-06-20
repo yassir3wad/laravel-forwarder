@@ -10,7 +10,7 @@ class ForwarderServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Route::macro('forward', function ($method, $routeFrom, $routeTo, $path = null) {
+        Route::macro('forward', function ($method, $routeFrom, $routeTo = null, $path = null) {
             if (!$path) {
                 $path = [SendController::class, 'send'];
             }
