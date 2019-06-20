@@ -46,16 +46,16 @@ class Forward
                 ]
             ]);
         } catch (\Exception $exception) {
-//            $error = new ErrorParser($exception);
-//            return $error->handle();
-        } finally {
-            return response(["message" => ""]);
+            $error = new ErrorParser($exception);
+            return $error->handle();
         }
 
+        $response = json_decode((string)$result->getBody(), true);
+
         if ($class == SendController::class) {
-            return json_decode((string)$result->getBody(), true);
+            return response($response, $result->getStatusCode());
         } else {
-            $request = $request->merge(['response' => json_decode((string)$result->getBody(), true)]);
+            $request = $request->merge(['response' => $response]);
             return $next($request);
         }
     }
