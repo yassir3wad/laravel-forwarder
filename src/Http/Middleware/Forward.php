@@ -32,7 +32,12 @@ class Forward
                 implode('/', $request->segments()), [
                     'form_params' => $request->post(),
                     'query' => $request->query(),
-                    'headers' => $request->header('forward')
+                    'headers' => [
+                        'authorization' => $request->header('forward'),
+                        'accept' => $request->header('accept'),
+                        'user-agent' => $request->header('user-agent'),
+                        'agent' => $request->header('agent'),
+                    ]
                 ]
             ]);
         } catch (\Exception $exception) {
